@@ -1,0 +1,61 @@
+version: "3.3"
+services:
+  nuxt:
+    container_name: ad-ssl-nuxt
+    build:
+      context: "nuxt"
+      dockerfile: dev.Dockerfile
+    volumes:
+      - "./nuxt:/nuxt"
+    restart: "on-failure:5"
+    ports:
+      - "3000:3000"
+      - "24678:24678"
+    environment:
+      HOST: 0.0.0.0
+    # links:
+    #   - strapi
+  # strapi:
+  #   container_name: rw-strapi
+  #   ports:
+  #     - "1337:1337"
+  #   build:
+  #     context: "strapi"
+  #     dockerfile: dev.Dockerfile
+  #   volumes:
+  #     - "./strapi:/app"
+  #   environment:
+  #     HOST: 0.0.0.0
+  #     PORT: 1337
+  #     WAIT_HOSTS: strapi-db:3306
+  #     DATABASE_HOST: strapi-db
+  #     DATABASE_PORT: 3306
+  #     WAIT_HOSTS_TIMEOUT: 180
+  #     WAIT_SLEEP_INTERVAL: 10
+  #     WAIT_HOST_CONNECT_TIMEOUT: 10
+  #   depends_on:
+  #     - strapi-db
+  #   command: sh -c "/wait && npm run develop"
+  # strapi-db:
+  #   container_name: rw-strapi-db
+  #   build:
+  #     context: "mysql"
+  #   restart: always
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: strapi
+  #     MYSQL_USER: strapi
+  #     MYSQL_PASSWORD: strapi
+  #   volumes:
+  #     - ./mysql/data:/var/lib/mysql
+  # phpmyadmin:
+  #   container_name: rw-phpmyadmin
+  #   image: phpmyadmin/phpmyadmin
+  #   ports:
+  #     - 127.0.0.1:10081:80
+  #   environment:
+  #     PMA_HOSTS: strapi-db
+  #     PMA_USER: strapi
+  #     PMA_PASSWORD: strapi
