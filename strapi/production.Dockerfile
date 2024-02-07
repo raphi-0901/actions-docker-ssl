@@ -5,4 +5,4 @@ ADD wait /wait
 COPY . /app
 RUN chmod +x /wait
 
-CMD ['npm', 'run', 'start']
+CMD ["npm", "run", "start"]
