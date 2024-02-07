@@ -22,7 +22,7 @@ services:
     container_name: prod-ad-ssl-nuxt
     build:
       context: "nuxt"
-      dockerfile: dev.Dockerfile
+      dockerfile: production.Dockerfile
     volumes:
       - "./nuxt:/nuxt"
     restart: "on-failure:5"
@@ -39,12 +39,13 @@ services:
       - "1337:1337"
     build:
       context: "strapi"
-      dockerfile: dev.Dockerfile
+      dockerfile: production.Dockerfile
     volumes:
       - "./strapi:/app"
     environment:
       HOST: 0.0.0.0
       PORT: 1337
+      NODE_ENV: production
       WAIT_HOSTS: strapi-db:3306
       DATABASE_HOST: strapi-db
       DATABASE_PORT: 3306
