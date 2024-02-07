@@ -14,4 +14,4 @@ ENV PATH ./node_modules/.bin/:$PATH
 EXPOSE 3000
 
 # build and serve
-CMD [ "npm", "run", "build" ,"&&", "node", ".output/server/index.mjs" ]
+CMD [ "sh", "-c", "npm run build && node .output/server/index.mjs" ]
