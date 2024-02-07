@@ -14,6 +14,7 @@ services:
       - nuxt
       - strapi
   certbot:
+    container_name: prod-ad-ssl-certbot
     image: certbot/certbot:latest
     volumes:
       - ./certbot/www/:/var/www/certbot/:rw
@@ -28,7 +29,6 @@ services:
     restart: "on-failure:5"
     ports:
       - "3000:3000"
-      - "24678:24678"
     environment:
       HOST: 0.0.0.0
     links:
@@ -54,7 +54,6 @@ services:
       WAIT_HOST_CONNECT_TIMEOUT: 10
     depends_on:
       - strapi-db
-    command: sh -c "/wait && npm run develop"
   strapi-db:
     container_name: prod-ad-ssl-strapi-db
     build:

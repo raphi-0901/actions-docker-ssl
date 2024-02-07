@@ -11,7 +11,9 @@ COPY . ./nuxt
 
 ENV PATH ./node_modules/.bin/:$PATH
 
-EXPOSE 3000
+RUN npm install
 RUN npm run build
+
+EXPOSE 3000
 
 CMD [ "node", "nuxt/.output/server/index.mjs" ]
