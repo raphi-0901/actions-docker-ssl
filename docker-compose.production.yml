@@ -4,14 +4,20 @@ services:
     container_name: prod-ad-ssl-proxy
     image: nginx:1.23
     ports:
-      - "2000:2000"
+      - "443:443"
       - "80:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/strapi-upstream.conf:/etc/nginx/conf.d/upstream.conf
-
-      # - ./ssl/site.crt:/etc/ssl/certs/site.crt
-      # - ./ssl/site.dec.key:/etc/ssl/private/site.dec.key
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+    depends_on:
+      - nuxt
+      - strapi
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
   nuxt:
     container_name: prod-ad-ssl-nuxt
     build:
